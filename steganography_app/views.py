@@ -50,3 +50,29 @@ def extract_text_from_image(image):
     if isinstance(data, bytes):
         return data.decode('utf-8')
     return data
+
+
+
+def login_view(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        if username == 'admin' and password == 'admin':
+            return render(request, 'home.html')
+        else:
+            message = "Invalid credentials"
+            return render(request, 'login.html', {'message': message})
+
+
+def register_view(request):
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
+        if password == confirm_password:
+            message = "Registration successful"
+            return render(request, 'login.html', {'message': message})
+        else:
+            message = "Passwords do not match"
+            return render(request, 'register.html', {'message': message})
+    return render(request, 'register.html')
